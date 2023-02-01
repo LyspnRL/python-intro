@@ -1,0 +1,13 @@
+#strings
+name = 'chris'
+print("my volleyball number is 11")
+volleyballnumber = '11'
+print('if someone asks you if im good at rocket league, they are telling the truth')
+#integer
+age = '16'
+#booleans
+likes_rocket_league = True
+xbox_username = 'Lyspn'
+#concatenation
+print('my name is : ' + name)
+print('my volleyball number is : ' + volleyballnumber)
