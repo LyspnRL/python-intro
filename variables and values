@@ -1,0 +1,19 @@
+#variables and values
+#variables are things that can be changed
+#variables are representations of "something"
+#values are the actual data
+human1 = 'tuff'
+human2 = 'chris'
+human3 = 'buddy'
+human4 = 'bro'
+human5 = 'buddies bro'
+#these prints are made to be verticle
+print(human1)
+print(human2)
+print(human3)
+print(human4)
+print(human5)
+#one dimensional array for long iteration
+humans = ['christian','tuff','alex','seth','yerlond']
+for human in humans:
+    print(human)
