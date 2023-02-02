@@ -1,0 +1,19 @@
+#addition
+a = 10 
+b = 20
+print(a+b) #add two numbers
+#subtraction
+a = 90
+b = 35
+print(a-b) #add nine numbers
+#multiplication
+a = 9
+b = 9
+print(a*b) # multiply two numbers
+#division
+a = 47
+b = 7
+print(a/b) #divide two numbers
+a = 22
+b = 11
+print(a//b) #divide two number, answer comes back as an integer
