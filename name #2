@@ -1,0 +1,6 @@
+#asks user what their first name is
+first_name = "chris"
+#asks user what their last name is
+last_name = "charles"
+#prints a statement to welcome the user
+print("hello, " + first_name + " " + last_name + " welcome to thonny")
