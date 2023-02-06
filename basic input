@@ -4,3 +4,16 @@ first_name = input("what is your first name?")
 last_name = input("what is your last name?")
 #prints a statement to welcome the user
 print("hello, " + first_name.capitalize() + " " + last_name.capitalize().swapcase() + " welcome to thonny")
+
+#asks user what their first name is
+first_name = input("what is your first name?")
+#asks user what their last name is
+last_name = input("what is your last name?")
+
+#takesa a string and capitalize the first letter
+def cleanTxt(incoming_text):
+    formatted_text = incoming_text.capitalize()
+    return formatted_text
+
+#prints a statement to welcome the user
+print(f"hello, {cleanTxt(first_name)} {cleanTxt(last_name)}  welcome to thonny")
