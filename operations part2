@@ -1,0 +1,21 @@
+user_sel = input("for two numbers, do you wish to Add, Subtract, Multiply, Divide")
+#ask user for two numbers, int means integer
+user_num1 = int(input("please enter number one:"))
+user_num2 = int(input("please enter number two:"))
+
+def add_numbers(a, b):
+    sum_numbers = a + b
+    return f"{a} + {b} = {sum_numbers}"
+
+def sub_numbers(a, b):
+    return f"{a} + {b} = {a-b}"
+
+if user_sel == "SUBTRACT":
+    print(subtract_numbers(user_num1, user_num2))
+
+if user_sel == "ADD":
+    print(add_numbers(user_num1, user_num2))
+    
+def multiply_numbers(a, b):
+    sum_numbers = a * b
+    return f"{a} * {b} = {sum_numbers}"
