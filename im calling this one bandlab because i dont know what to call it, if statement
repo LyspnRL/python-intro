@@ -1,0 +1,11 @@
+a=8  #int
+b=round(9)  #float
+
+#if a>b:
+    #print(f"{a} > {b}")
+#if a>=b:
+    #print(f"{a} >= {b}")
+#if a<b:
+   # print(f"{a} < {b}")
+if a<=b:
+    print(f"{a} <= {b}")
