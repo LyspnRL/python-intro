@@ -1,0 +1,7 @@
+a= "cchs"
+b= "CCHS"
+
+if not a == b:
+    print("correct")
+else:
+    print("incorrect")
