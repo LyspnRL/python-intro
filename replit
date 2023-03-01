@@ -1,0 +1,31 @@
+#################################################
+# Name chris
+# Computer Science 20
+# DATE 2/27/2023
+#
+# Project: Media Selector
+# Purpose: To help select a show/movie to watch
+#################################################
+
+#This was the starting point
+
+genre = str(input("Do you want to play a SPORT or FPS game?"))
+
+if genre == "FPS": 
+  fav_fps =str(input("do you prefer a team based game or solo game?"))
+  #asking what genre the user prefers + fps coding
+  if fav_fps == "solo":
+    fav_choice = str(input("would you rather play Call Of Duty or Fallout?"))
+    print(f"you have chosen {fav_choice}")
+  if fav_fps == "team based":
+    fav_choice = str(input("would you rather play Rocket League or Overwatch?"))
+    print(f"you have chosen {fav_choice}")
+else: 
+  fav_sports = str(input("do you play casual or competitively?"))
+  #sports coding
+  if fav_sports == "casual":
+    fav_choice = str(input("would you rather play Golf or MLB?"))
+    print(f"you have chosen {fav_choice}")
+  if fav_sports == "competitively":
+    fav_choice = str(input("would you rather play NHL or NFL?"))
+    print(f"you have chosen {fav_choice}")
