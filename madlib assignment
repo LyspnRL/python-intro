@@ -1,22 +1,36 @@
 #https://easygui.sourceforge.net/tutorial.html#integerbox
-#import easygui as easy
+import easygui as easy
+#################################################
+# Name chris
+# Computer Science 20
+# DATE 3/13/2023
+#
+# Project: madlib
+# Purpose: create a madlib
+#################################################
 
 ADV_1 = ["boring", "exciting", "disappointing", "relieving"]
 ADV_1_choice = easy.choicebox("how was the election??", "select one", ADV_1)
+#choose the adverb for the first question
 
 noun_1 = ["trump", "hillory clinton", "joe biden", "buddy bro"]
 noun_1_choice = easy.choicebox("who was elected?", "select one", noun_1)
+#choose the noun for the second question
 
 verb_1 = ["sleep", "dance", "go on their phone", "do president stuff"]
 verb_1_choice = easy.choicebox("what was the first order?", "pick one", verb_1)
+#choose the verb for the third question
 
 ADJ_1 = ["angry", "sad", "jealous", "revengeful"]
 ADJ_1_choice = easy.choicebox("how was the past president feeling about not being elected?", "pick one", ADJ_1)
+#choose the adjective for the fourth question
 
 future = ["rocket league pro", "overwatch league pro", "conservative lowerdowns", "try to re-elect"]
 future_choice = easy.choicebox("pick the future", "select the path", future)
+#pick the future for the chosen person
 
-easy.textbox(msg="Final Madlib",title="CS20 Project", text="After a " + ADV_1_choice + " president election, the people have elected " + noun_1_choice + " as the president, soon after, the presidents first order was to " + verb_1_choice + ", what a classic first move," " time skip to next election, the president wasnt re-elceted, they're feeling very, " + ADJ_1_choice + " what should the president do now?, " + future_choice + " is the new goal for " + noun_1_choice + ", GG ez")
+easy.textbox(msg="Final Madlib",title="CS20 Project", text=F"After a {ADV_1_choice} president election, the people have elected {noun_1_choice} as the president, soon after the presidents first order was to {verb_1_choice}, what a classic first move, time skip to next election, the president wasnt re-elceted, they're feeling very, {ADJ_1_choice} what should the president do now?, {future_choice} is the new goal for {noun_1_choice}, GG ez")
+#the textbox
   
 
 
