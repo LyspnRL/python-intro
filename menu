@@ -1,0 +1,20 @@
+numbers = [0,1,2,3,4,5]
+foods = ["toast", "cereal", "bacon", "eggs", "hashbrowns", "waffles"]
+
+#for num in numbers:
+    #(numbers[num])
+    
+    
+#for food in foods:
+    #print(food)
+def menu():
+    for x in range(len(foods)):
+     print(foods[x])
+
+print("current menu")
+menu()
+choice = input("what would you like to add to the menu?")
+foods.append(choice)
+
+print("new menu")
+menu()
