@@ -1,0 +1,17 @@
+#empty fgame list
+myList = []
+#start counter
+fizzbuzz_counter = 1
+#end counter
+fizzbuzz_end = 20
+#game loop
+while fizzbuzz_counter <= fizzbuzz_end:
+    if fizzbuzz_counter%3 == 0 and fizzbuzz_counter%5 == 0:
+        myList.append("fizzbuzz!!!")
+    elif fizzbuzz_counter%3 == 0:
+        myList.append("fizz")
+    elif fizzbuzz_counter%5 == 0:
+        myList.append("buzz")
+    else:
+        myList.append(fizzbuzz_counter)
+    fizzbuzz_counter+=1
