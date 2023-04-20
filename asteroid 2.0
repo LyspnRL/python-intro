@@ -1,0 +1,51 @@
+import pygame, sys
+
+#Game Setup
+pygame.init()
+pygame.display.set_caption('Asteroid Clone - OOP')
+SCREEN_W, SCREEN_H = 960, 720 
+display_surface = pygame.display.set_mode((SCREEN_W, SCREEN_H))
+clock = pygame.time.Clock()
+
+#Background
+background_surface = pygame.image.load("./sprites/background.png").convert()
+#Shaceship
+ship = pygame.image.load("./sprites/player.png").convert_alpha()
+ship_rect = ship.get_rect(center = (SCREEN_W/2,SCREEN_H/2))
+
+laser = pygame.image.load("./sprites/laser.png").convert_alpha()
+laser_rect = laser.get_rect(midbottom = ship_rect.midtop)
+
+asteroid = pygame.image.load("./sprites/asteroid.png")
+
+#def MousePosition():
+#  print(pygame.mouse.get_pos())
+
+#Main Game Loop
+while True:
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      pygame.quit()
+      sys.exit()
+    if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.button == 1:
+            laser_rect = laser.get_rect(midbottom = ship_rect.midtop)
+            laser_list.append(laser_rect)
+        
+  clock.tick(1000)
+  
+  #Player Movement
+  ship_rect.center = pygame.mouse.get_pos()
+  
+  display_surface.fill((0,0,0))
+  display_surface.blit(background_surface,(0,0))
+  display_surface.blit(ship,ship_rect)
+  #display_surface.blit(laser,laser_rect)
+  
+  for rect in laser_list
+  
+  
+  pygame.display.update()
+  
+  
+
