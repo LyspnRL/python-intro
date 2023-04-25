@@ -1,4 +1,13 @@
+
+
+  
+
+
+  
+
 import pygame, sys
+
+from random import randint, uniform
 
 #Game Setup
 pygame.init()
@@ -20,18 +29,27 @@ laser_list = []
 asteroid = pygame.image.load("./sprites/asteroid.png").convert_alpha()
 asteroid_rect = asteroid.get_rect(midbottom = ship_rect.midtop)
 asteroid_list = []
-
-
+#asteroid
 asteroid = pygame.image.load("./sprites/asteroid.png")
-
+asteroid_list = []
 #laser funtion
 def laser_update(laser_list):
     for rect in laser_list:
         rect.y -= 3
         if rect.bottom < 0:
             laser_list.remove(rect)
+def asteroid_update(asteroid_list, speed=1):
+    for asteroid_tuple in asteroid_list:
+        direction = asteroid_tuple[1]
+        asteroid_rect.center += direction*speed
+
+
 #def MousePosition():
 #  print(pygame.mouse.get_pos())
+asteroid_spawn_rate = 500
+asteroid_timer = pygame.event.custom_type()
+pygame.time.set_timer(asteroid_timer, asteroid_spawn_rate)
+
 
 #Main Game Loop
 while True:
@@ -44,10 +62,20 @@ while True:
             laser_rect = laser.get_rect(midbottom = ship_rect.midtop)
             laser_list.append(laser_rect)
             print(len(laser_list))
-  clock.tick(1000)
+  
+    if event.type == asteroid_timer:
+        pos_x = randint(-100, SCREEN_W+100)
+        pos_y = randint(-100, -50)
+        spawn_point = (pos_x, pos_y)
+        asteroid_rect = asteroid.get_rect(center = spawn_point)
+        asteroid_direction = pygame.math.Vector2(uniform(-0.5, 0.5),0.2, 1.0)
+        asteroid_list.append((asteroid_rect,spawn_direction))
+  clock.tick(60)
+  
   
   #Player Movement
   ship_rect.center = pygame.mouse.get_pos()
+  
   #object movement
   laser_update(laser_list)
  
@@ -60,8 +88,5 @@ while True:
  
   pygame.display.update()
   
-  
-
-
   
 
