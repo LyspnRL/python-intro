@@ -29,7 +29,7 @@ asteroid_list = []
 #laser funtion
 def laser_update(laser_list):
     for rect in laser_list:
-        rect.y -= 3
+        rect.y -= 5
         if rect.bottom < 0:
             laser_list.remove(rect)
 
@@ -38,8 +38,8 @@ def asteroid_update(asteroid_list, speed=1):
         asteroid_rect = asteroid_tuple[0]
         direction = asteroid_tuple[1]
         asteroid_rect.center += direction*speed
-        if rect.bottom < 0:
-            asteroid_list.remove(rect)
+        if asteroid_rect.top > SCREEN_H:
+            asteroid_list.remove(asteroid_tuple)
 
 
 #def MousePosition():
@@ -52,23 +52,26 @@ pygame.time.set_timer(asteroid_timer, asteroid_spawn_rate)
 #Main Game Loop
 while True:
   for event in pygame.event.get():
-    if event.type == pygame.QUIT:
-      pygame.quit()
-      sys.exit()
-    if event.type == pygame.MOUSEBUTTONDOWN:
-        if event.button == 1:
+      if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
+      if event.type == pygame.MOUSEBUTTONDOWN:
+          if event.button == 1:
             laser_rect = laser.get_rect(midbottom = ship_rect.midtop)
             laser_list.append(laser_rect)
             print(len(laser_list))
   
-    if event.type == asteroid_timer:
-        pos_x = randint(-100, SCREEN_W+100)
-        pos_y = randint(-100, -50)
-        spawn_point = (pos_x, pos_y)
-        asteroid_rect = asteroid.get_rect(center = spawn_point)
-        asteroid_direction = pygame.math.Vector2(uniform(-0.5, 0.5),0.2, 1.0)
-        asteroid_list.append((asteroid_rect,spawn_direction))
+      if event.type == asteroid_timer:
+          pos_x = randint(-100, SCREEN_W+100)
+          pos_y = randint(-100, -50)
+          spawn_point = (pos_x, pos_y)
+          asteroid_rect = asteroid.get_rect(center = spawn_point)
+          spawn_direction = pygame.math.Vector2(uniform(-0.5, 0.5),uniform(0.2, 1.0))
+          asteroid_list.append((asteroid_rect, spawn_direction))
+  
+  
   clock.tick(60)
+  print(len(asteroid_list))
   
   
   #Player Movement
@@ -76,17 +79,38 @@ while True:
   
   #object movement
   laser_update(laser_list)
-  asteroid_update(asteroid_list)
- 
+  asteroid_update(asteroid_list,5)
+  
+  #collisions
+  
+  #ship
+  for asteroid_tuple in asteroid_list:
+      asteroid_rect = asteroid_tuple[0]
+      if ship_rect.colliderect(asteroid_rect):
+          pygame.quit()
+          sys.exit()
+  #lasers
+  for asteroid_tuple in asteroid_list:
+      for laser_rect in laser_list:
+          if asteroid_tuple[0].colliderect(laser_rect):
+              asteroid_list.remove(asteroid_tuple)
+              laser_list.remove(laser_rect)
+  #background            
   display_surface.fill((0,0,0))
   display_surface.blit(background_surface,(0,0))
+  
   display_surface.blit(ship,ship_rect)
+  pygame.draw.rect(display_surface, "red", ship_rect, width=1)
   #display_surface.blit(laser,laser_rect)
   for rect in laser_list:
       display_surface.blit(laser,rect)
   for asteroid_tuple in asteroid_list:
-      display_surface.blit(asteroid_tuple[0])
+      display_surface.blit(asteroid,asteroid_tuple[0])
   pygame.display.update()
+  
+  
+
+
   
   
 
