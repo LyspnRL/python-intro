@@ -1,0 +1,207 @@
+import pygame
+import sys
+
+# Initialize Pygame
+pygame.init()
+
+# Set up the game window
+window_width = 784
+window_height = 589
+window = pygame.display.set_mode((window_width, window_height))
+pygame.display.set_caption("Pac-Man")
+
+# Colors
+BLACK = (0, 0, 0)
+BLUE = (0, 0, 255)
+WHITE = (255, 255, 255)
+RED = (255, 0, 0)
+YELLOW = (252, 240, 3)
+PINK = (255, 192, 203)
+CYAN = (0, 255, 255)
+ORANGE = (255, 165, 0)
+
+# Maze attributes
+maze_width = 28
+maze_height = 31
+maze = [
+    "############################",
+    "#............##............#",
+    "#.####.#####.##.#####.####.#",
+    "#o####.#####.##.#####.####o#",
+    "#.####.#####.##.#####.####.#",
+    "#..........................#",
+    "#.####.##.########.##.####.#",
+    "#.####.##.########.##.####.#",
+    "#......##....##....##......#",
+    "######.##### ## #####.######",
+    "######.##### ## #####.######",
+    "######.##          ##.######",
+    "######.## ###--### ##.######",
+    "######.## #      # ##.######",
+    "      .   #      #   .      ",
+    "######.## #      # ##.######",
+    "######.## ######## ##.######",
+    "######.##          ##.######",
+    "######.## ######## ##.######",
+    "######.## ######## ##.######",
+    "#............##............#",
+    "#.####.#####.##.#####.####.#",
+    "#.####.#####.##.#####.####.#",
+    "#o..##................##..o#",
+    "###.##.##.########.##.##.###",
+    "###.##.##.########.##.##.###",
+    "#......##....##....##......#",
+    "#.##########.##.##########.#",
+    "#o##########.##.##########o#",
+    "#..........................#",
+    "############################",
+]
+
+# Maze dimensions
+cell_width = window_width // maze_width
+cell_height = window_height // maze_height
+
+# Pac-Man attributes
+pacman_x = 600
+pacman_y = 500
+pacman_radius = 10
+pacman_speed = 1.5
+
+# Ghost attributes
+ghost_radius = 10
+ghost_speed = 1.0
+
+# Ghost colors
+ghost_colors = [PINK, CYAN]
+
+# Ghost positions
+ghost_positions = [(100, 100), (400, 200)]
+
+# Teleporter attributes
+teleporter1_x = 100
+teleporter1_y = 278
+teleporter2_x = 700
+teleporter2_y = 278
+teleporter_radius = 10
+
+# Teleportation delay
+teleport_delay = 0.5
+
+# Flag to track teleportation state
+is_teleporting = False
+
+# Dot attributes
+dot_radius = 4
+
+# Dots remaining
+dots_remaining = 0
+
+# Game clock
+clock = pygame.time.Clock()
+
+# Function to check if a given position is valid for Pac-Man to move
+def is_valid_move(x, y):
+    row = int(y // cell_height)
+    col = int(x // cell_width)
+    if 0 <= row < maze_height and 0 <= col < maze_width:
+        if maze[row][col] != "#":
+            return True
+    return False
+
+# Game initialization
+def initialize_game():
+    global dots_remaining
+    dots_remaining = 0
+    for row in maze:
+        dots_remaining += row.count(".")
+
+# Initialize the game
+initialize_game()
+
+# Game loop
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Collision detection
+    next_pacman_x = pacman_x
+    next_pacman_y = pacman_y
+
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and pacman_x > 0 and is_valid_move(pacman_x - pacman_speed, pacman_y):
+        next_pacman_x -= pacman_speed
+    elif keys[pygame.K_RIGHT] and pacman_x < window_width - pacman_radius and is_valid_move(pacman_x + pacman_speed, pacman_y):
+        next_pacman_x += pacman_speed
+    elif keys[pygame.K_UP] and pacman_y > 0 and is_valid_move(pacman_x, pacman_y - pacman_speed):
+        next_pacman_y -= pacman_speed
+    elif keys[pygame.K_DOWN] and pacman_y < window_height - pacman_radius and is_valid_move(pacman_x, pacman_y + pacman_speed):
+        next_pacman_y += pacman_speed
+
+    # Move Pac-Man if no collision will occur
+    if 0 <= next_pacman_x < window_width - pacman_radius and 0 <= next_pacman_y < window_height - pacman_radius:
+        pacman_x = next_pacman_x
+        pacman_y = next_pacman_y
+
+    # Teleporter logic
+    if abs(pacman_x - teleporter1_x) <= pacman_radius and abs(pacman_y - teleporter1_y) <= pacman_radius:
+        if not is_teleporting:
+            is_teleporting = True
+            pacman_x = teleporter2_x
+            pacman_y = teleporter2_y
+            pygame.time.wait(int(teleport_delay * 1000))  # Delay for teleportation effect
+            is_teleporting = False
+    elif abs(pacman_x - teleporter2_x) <= pacman_radius and abs(pacman_y - teleporter2_y) <= pacman_radius:
+        if not is_teleporting:
+            is_teleporting = True
+            pacman_x = teleporter1_x
+            pacman_y = teleporter1_y
+            pygame.time.wait(int(teleport_delay * 1000))  # Delay for teleportation effect
+            is_teleporting = False
+
+    # Dot collision detection
+    current_row = int(pacman_y // cell_height)
+    current_col = int(pacman_x // cell_width)
+    if 0 <= current_row < maze_height and 0 <= current_col < maze_width:
+        if maze[current_row][current_col] == ".":
+            maze[current_row] = maze[current_row][:current_col] + " " + maze[current_row][current_col + 1:]
+            dots_remaining -= 1
+
+    # Check for game over
+    if dots_remaining == 0:
+        initialize_game()
+
+    # Clear the screen
+    window.fill(BLACK)
+
+    # Draw the maze
+    for r in range(maze_height):
+        for c in range(maze_width):
+            if r < len(maze) and c < len(maze[r]):
+                if maze[r][c] == "#":
+                    pygame.draw.rect(window, BLUE, (c * cell_width, r * cell_height, cell_width, cell_height))
+                elif maze[r][c] == ".":
+                    pygame.draw.circle(window, YELLOW, (int(c * cell_width + cell_width / 2), int(r * cell_height + cell_height / 2)), dot_radius)
+
+    # Draw the teleporters
+    pygame.draw.circle(window, RED, (teleporter1_x, teleporter1_y), teleporter_radius)
+    pygame.draw.circle(window, RED, (teleporter2_x, teleporter2_y), teleporter_radius)
+
+    # Draw Pac-Man
+    pygame.draw.circle(window, YELLOW, (int(pacman_x), int(pacman_y)), pacman_radius)
+
+    # Draw the ghosts
+    for i in range(len(ghost_positions)):
+        pygame.draw.circle(window, ghost_colors[i], ghost_positions[i], ghost_radius)
+
+    # Update the game display
+    pygame.display.update()
+
+    # Limit the frame rate
+    clock.tick(60)
+
+# Quit the game
+pygame.quit()
+sys.exit()
+
